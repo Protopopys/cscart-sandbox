@@ -15,31 +15,25 @@ ENV PHPIZE_DEPS \
 RUN set -xe; \
     apk add --no-cache --update --virtual .build-deps \
 	${PHPIZE_DEPS} \
-#curl
-    curl-dev \
-#xml
-	libxml2-dev \
 #icu for intl
     icu-dev \
+#zlib for zip
+    zlib-dev \
+#for xml
+    libxml2-dev \
 #imagick
-    imagemagick6-dev \
-#phar
-    libressl-dev; \
+    imagemagick-dev; \
     NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1); \
     docker-php-ext-install -j${NPROC} \
     exif \
-    phar \
-    json \
     intl \
-    xml \
-    curl \
     mysqli \
     mbstring \
     zip \
     soap \
  && pecl channel-update pecl.php.net \
  && pecl install imagick \
- && pecl install apcu \ 
+ && pecl install apcu \
  && docker-php-ext-enable imagick apcu \
  && echo -e 'file_uploads = On\n\
 memory_limit = 256M\n\
