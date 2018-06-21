@@ -22,7 +22,7 @@ RUN set -xe; \
 #for xml
     libxml2-dev \
 #imagick
-    imagemagick-dev; \
+    imagemagick6-dev; \
     NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1); \
     docker-php-ext-install -j${NPROC} \
     exif \
