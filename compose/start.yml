@@ -1,0 +1,141 @@
+version: '3'
+services:
+
+  nginx5.6:
+    env_file: ./php.env
+    image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
+    command:
+    environment:
+    networks:
+      php5.6:
+      external:
+        ipv4_address: 172.22.0.56
+    restart: always
+
+  php5.6-fpm:
+    image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP56_VERSION}-fpm-alpine3.7
+    networks:
+      internal:
+      php5.6:
+        aliases:
+          - php-fpm
+    restart: always
+
+    ################################################################################
+
+  nginx7.0:
+    env_file: ./php.env
+    image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
+    command:
+    environment:
+    networks:
+      php7.0:
+      external:
+        ipv4_address: 172.22.0.70
+    restart: always
+
+  php7.0-fpm:
+    image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP70_VERSION}-fpm-alpine3.7
+    networks:
+      php7.0:
+      internal:
+        aliases:
+          - php-fpm
+    restart: always
+
+    ################################################################################
+
+  nginx7.1:
+    env_file: ./php.env
+    image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
+    command:
+    environment:
+    networks:
+      php7.1:
+      external:
+        ipv4_address: 172.22.0.71
+    restart: always
+
+  php7.1-fpm:
+    image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP71_VERSION}-fpm-alpine3.7
+    networks:
+      internal:
+      php7.1:
+        aliases:
+          - php-fpm
+    restart: always
+
+    ################################################################################
+
+  nginx7.2:
+    env_file: ./php.env
+    image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
+    command:
+    environment:
+    networks:
+      php7.2:
+      external:
+        ipv4_address: 172.22.0.72  
+    restart: always
+
+  php7.2-fpm:
+    image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP72_VERSION}-fpm-alpine3.7
+    networks:
+      internal:
+      php7.2:
+        aliases:
+          - php-fpm
+    restart: always
+
+################################################################################
+
+  mysql:
+    image: mysql:5.7.22
+    command: mysqld --sql-mode="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" --character_set_server="utf8" --character_set_filesystem="utf8" --collation-server="utf8_general_ci" --init-connect='SET NAMES utf8' --init_connect='SET collation_connection = utf8_general_ci' --skip-character-set-client-handshake
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_RPASS}
+      MYSQL_DATABASE: ${MYSQL_DB}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASS}
+    volumes:
+      - ${MYSQL_LOGS}:/var/log:rw
+      - ${MYSQL_DATA}:/var/lib/mysql:rw
+      - ${MYSQL_CONF}:/etc/mysql/conf.d:ro
+    networks:
+      internal:
+        aliases:
+          - database
+
+  adminer:
+    image: adminer
+    restart: always
+    networks:
+      internal:
+
+################################################################################
+networks:
+  external:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      -
+        subnet: 172.22.0.0/24
+
+  internal:
+    driver: bridge
+  php5.6:
+    driver: bridge
+      driver: default
+
+  php7.0:
+    driver: bridge
+      driver: default
+
+  php7.1:
+    driver: bridge
+      driver: default
+
+  php7.2:
+    driver: bridge
+      driver: default
