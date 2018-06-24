@@ -41,11 +41,12 @@ RUN apk add --update --no-cache \
   ; do \
     printf -- "%b" "#!/usr/bin/env sh\n/root/.acme.sh/acme.sh --${verb} --config-home /acme.sh \"\$@\"" >/usr/local/bin/--${verb} && chmod +x /usr/local/bin/--${verb} \
   ; done \
+ && mkdir /etc/nginx/xtra \
  && ln -sf /dev/stdout /var/log/nginx/access.log \
- && ln -sf /dev/stderr /var/log/nginx/error.log 
+ && ln -sf /dev/stderr /var/log/nginx/error.log
 
-COPY --chown=daemon:daemon html /etc/nginx/html  
-COPY --chown=daemon:daemon xtra /etc/nginx/xtra
+COPY --chown=root:root html /etc/nginx/html  
+COPY --chown=root:root templates /etc/nginx/templates
 COPY --chown=root:root nginx.conf /etc/nginx/
 COPY --chown=root:root supervisord.conf /etc/supervisord.conf
 COPY --chown=root:root init.sh /

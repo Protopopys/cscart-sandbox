@@ -2,10 +2,14 @@ version: '3'
 services:
 
   nginx5.6:
-    env_file: ./php.env
     image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
-    command:
+    command: /bin/sh -c "envsubst '$${DOMAIN},$${CSCART_ADDRESS}' < /etc/nginx/templates/cscart.dist > /etc/nginx/conf.d/cscart.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
     environment:
+      DOMAIN: ${DOMAIN}
+      CSCART_ADDRESS: ${5.6_ADDRESS}
+    volumes:
+      - ${CSCART_VOLUMES}:/var/www/html:rw
+      - ${CSCART_SSL}:/etc/nginx/ssl
     networks:
       php5.6:
       external:
@@ -14,6 +18,8 @@ services:
 
   php5.6-fpm:
     image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP56_VERSION}-fpm-alpine3.7
+    volumes:
+      - ${CSCART_VOLUMES}:/var/www/html:rw
     networks:
       internal:
       php5.6:
@@ -24,10 +30,14 @@ services:
     ################################################################################
 
   nginx7.0:
-    env_file: ./php.env
     image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
-    command:
+    command: /bin/sh -c "envsubst '$${DOMAIN},$${CSCART_ADDRESS}' < /etc/nginx/templates/cscart.dist > /etc/nginx/conf.d/cscart.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
     environment:
+      DOMAIN: ${DOMAIN}
+      CSCART_ADDRESS: ${7.0_ADDRESS}
+    volumes:
+      - ${CSCART_VOLUMES}:/var/www/html:rw
+      - ${CSCART_SSL}:/etc/nginx/ssl
     networks:
       php7.0:
       external:
@@ -36,6 +46,8 @@ services:
 
   php7.0-fpm:
     image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP70_VERSION}-fpm-alpine3.7
+    volumes:
+      - ${CSCART_VOLUMES}:/var/www/html:rw
     networks:
       php7.0:
       internal:
@@ -46,10 +58,14 @@ services:
     ################################################################################
 
   nginx7.1:
-    env_file: ./php.env
     image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
-    command:
-    environment:
+    command: /bin/sh -c "envsubst '$${DOMAIN},$${CSCART_ADDRESS}' < /etc/nginx/templates/cscart.dist > /etc/nginx/conf.d/cscart.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
+    volumes:
+      - ${CSCART_VOLUMES}:/var/www/html:rw
+      - ${CSCART_SSL}:/etc/nginx/ssl
+      environment:
+      DOMAIN: ${DOMAIN}
+      CSCART_ADDRESS: ${7.1_ADDRESS}
     networks:
       php7.1:
       external:
@@ -58,6 +74,8 @@ services:
 
   php7.1-fpm:
     image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP71_VERSION}-fpm-alpine3.7
+    volumes:
+      - ${CSCART_VOLUMES}:/var/www/html:rw
     networks:
       internal:
       php7.1:
@@ -68,10 +86,14 @@ services:
     ################################################################################
 
   nginx7.2:
-    env_file: ./php.env
     image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
-    command:
-    environment:
+    command: /bin/sh -c "envsubst '$${DOMAIN},$${CSCART_ADDRESS}' < /etc/nginx/templates/cscart.dist > /etc/nginx/conf.d/cscart.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
+    volumes:
+      - ${CSCART_VOLUMES}:/var/www/html:rw
+      - ${CSCART_SSL}:/etc/nginx/ssl
+      environment:
+      DOMAIN: ${DOMAIN}
+      CSCART_ADDRESS: ${7.2_ADDRESS}
     networks:
       php7.2:
       external:
@@ -80,6 +102,8 @@ services:
 
   php7.2-fpm:
     image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP72_VERSION}-fpm-alpine3.7
+    volumes:
+      - ${CSCART_VOLUMES}:/var/www/html:rw
     networks:
       internal:
       php7.2:
@@ -108,6 +132,8 @@ services:
 
   adminer:
     image: adminer
+    ports:
+      - "8080:8080"
     restart: always
     networks:
       internal:
