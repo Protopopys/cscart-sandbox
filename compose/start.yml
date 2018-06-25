@@ -1,117 +1,135 @@
 version: '3'
 services:
 
-  nginx5.6:
+  nginx56:
     image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
     command: /bin/sh -c "envsubst '$${DOMAIN},$${CSCART_ADDRESS}' < /etc/nginx/templates/cscart.dist > /etc/nginx/conf.d/cscart.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
     environment:
       DOMAIN: ${DOMAIN}
-      CSCART_ADDRESS: ${5.6_ADDRESS}
+      CSCART_ADDRESS: ${PHP56_ADDRESS}
     volumes:
       - ${CSCART_VOLUMES}:/var/www/html:rw
       - ${CSCART_SSL}:/etc/nginx/ssl
     networks:
-      php5.6:
+      php56:
       external:
         ipv4_address: 172.22.0.56
     restart: always
 
-  php5.6-fpm:
+  php56-fpm:
     image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP56_VERSION}-fpm-alpine3.7
     volumes:
       - ${CSCART_VOLUMES}:/var/www/html:rw
     networks:
       internal:
-      php5.6:
+      php56:
         aliases:
           - php-fpm
     restart: always
 
     ################################################################################
 
-  nginx7.0:
+  nginx70:
     image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
     command: /bin/sh -c "envsubst '$${DOMAIN},$${CSCART_ADDRESS}' < /etc/nginx/templates/cscart.dist > /etc/nginx/conf.d/cscart.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
     environment:
       DOMAIN: ${DOMAIN}
-      CSCART_ADDRESS: ${7.0_ADDRESS}
+      CSCART_ADDRESS: ${PHP70_ADDRESS}
     volumes:
       - ${CSCART_VOLUMES}:/var/www/html:rw
       - ${CSCART_SSL}:/etc/nginx/ssl
     networks:
-      php7.0:
+      php70:
       external:
         ipv4_address: 172.22.0.70
     restart: always
 
-  php7.0-fpm:
+  php70-fpm:
     image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP70_VERSION}-fpm-alpine3.7
     volumes:
       - ${CSCART_VOLUMES}:/var/www/html:rw
     networks:
-      php7.0:
       internal:
+      php70:
         aliases:
           - php-fpm
     restart: always
 
     ################################################################################
 
-  nginx7.1:
+  nginx71:
     image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
     command: /bin/sh -c "envsubst '$${DOMAIN},$${CSCART_ADDRESS}' < /etc/nginx/templates/cscart.dist > /etc/nginx/conf.d/cscart.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
     volumes:
       - ${CSCART_VOLUMES}:/var/www/html:rw
       - ${CSCART_SSL}:/etc/nginx/ssl
-      environment:
+    environment:
       DOMAIN: ${DOMAIN}
-      CSCART_ADDRESS: ${7.1_ADDRESS}
+      CSCART_ADDRESS: ${PHP71_ADDRESS}
     networks:
-      php7.1:
+      php71:
       external:
         ipv4_address: 172.22.0.71
     restart: always
 
-  php7.1-fpm:
+  php71-fpm:
     image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP71_VERSION}-fpm-alpine3.7
     volumes:
       - ${CSCART_VOLUMES}:/var/www/html:rw
     networks:
       internal:
-      php7.1:
+      php71:
         aliases:
           - php-fpm
     restart: always
 
     ################################################################################
 
-  nginx7.2:
+  nginx72:
     image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
     command: /bin/sh -c "envsubst '$${DOMAIN},$${CSCART_ADDRESS}' < /etc/nginx/templates/cscart.dist > /etc/nginx/conf.d/cscart.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
     volumes:
       - ${CSCART_VOLUMES}:/var/www/html:rw
       - ${CSCART_SSL}:/etc/nginx/ssl
-      environment:
+    environment:
       DOMAIN: ${DOMAIN}
-      CSCART_ADDRESS: ${7.2_ADDRESS}
+      CSCART_ADDRESS: ${PHP72_ADDRESS}
     networks:
-      php7.2:
+      php72:
       external:
         ipv4_address: 172.22.0.72  
     restart: always
 
-  php7.2-fpm:
+  php72-fpm:
     image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP72_VERSION}-fpm-alpine3.7
     volumes:
       - ${CSCART_VOLUMES}:/var/www/html:rw
     networks:
       internal:
-      php7.2:
+      php72:
         aliases:
           - php-fpm
     restart: always
 
 ################################################################################
+
+  proxy:
+    image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
+    command: /bin/sh -c "envsubst '$${PHP72_ADDRESS},$${PHP71_ADDRESS},$${PHP70_ADDRESS},$${PHP56_ADDRESS},$${DOMAIN}' < /etc/nginx/templates/proxy.dist > /etc/nginx/conf.d/proxy.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
+    volumes:
+      - ${CSCART_SSL}:/etc/nginx/ssl
+    environment:
+      DOMAIN: ${DOMAIN}
+      PHP72_ADDRESS: ${PHP72_ADDRESS}
+      PHP71_ADDRESS: ${PHP71_ADDRESS}
+      PHP70_ADDRESS: ${PHP70_ADDRESS}
+      PHP56_ADDRESS: ${PHP56_ADDRESS}
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - external  
+    restart: always
 
   mysql:
     image: mysql:5.7.22
@@ -150,18 +168,11 @@ networks:
 
   internal:
     driver: bridge
-  php5.6:
+  php56:
     driver: bridge
-      driver: default
-
-  php7.0:
+  php70:
     driver: bridge
-      driver: default
-
-  php7.1:
+  php71:
     driver: bridge
-      driver: default
-
-  php7.2:
+  php72:
     driver: bridge
-      driver: default

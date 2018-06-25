@@ -1,4 +1,5 @@
 ################################################################################
+include xtra/upstream.conf;
 
 server {
     
@@ -168,7 +169,7 @@ server {
 
 server {
     
-    listen  443 ssl http2;;
+    listen  443 ssl http2;
     server_name ${CSCART_ADDRESS};
     server_name www.${CSCART_ADDRESS};
 

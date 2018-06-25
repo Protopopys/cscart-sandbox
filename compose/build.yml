@@ -9,6 +9,12 @@ services:
 #      dockerfile: Dockerfile
 #    image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP53_VERSION}-fpm-alpine3.7
 
+  nginx:
+    build:
+      context: ../images/nginx
+      dockerfile: Dockerfile
+    image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
+
   php5.6-fpm:
     build:
       args:
