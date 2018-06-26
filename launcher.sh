@@ -12,11 +12,11 @@ getParams () {
     case ${var} in
 
         local)
-            dockerCommand="docker-compose -f ./compose/global.yml -f ./compose/local.yml"
+            dockerCommand="docker-compose -f ./compose/global.yml -f ./compose/local.yml --project-name sandbox"
         ;;
 
         external)
-            dockerCommand="docker-compose -f ./compose/global.yml -f ./compose/external.yml"
+            dockerCommand="docker-compose -f ./compose/global.yml -f ./compose/external.yml --project-name sandbox"
         ;;
 
         wildcard)

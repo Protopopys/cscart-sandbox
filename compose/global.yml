@@ -8,7 +8,7 @@ services:
       - ${CSCART_VOLUMES}:/var/www/html:rw
     networks:
       php56:
-      external:
+      public:
         ipv4_address: 172.22.0.56
     restart: always
 
@@ -17,7 +17,7 @@ services:
     volumes:
       - ${CSCART_VOLUMES}:/var/www/html:rw
     networks:
-      internal:
+      private:
       php56:
         aliases:
           - php-fpm
@@ -32,7 +32,7 @@ services:
       - ${CSCART_VOLUMES}:/var/www/html:rw
     networks:
       php70:
-      external:
+      public:
         ipv4_address: 172.22.0.70
     restart: always
 
@@ -41,7 +41,7 @@ services:
     volumes:
       - ${CSCART_VOLUMES}:/var/www/html:rw
     networks:
-      internal:
+      private:
       php70:
         aliases:
           - php-fpm
@@ -56,7 +56,7 @@ services:
       - ${CSCART_VOLUMES}:/var/www/html:rw
     networks:
       php71:
-      external:
+      public:
         ipv4_address: 172.22.0.71
     restart: always
 
@@ -65,7 +65,7 @@ services:
     volumes:
       - ${CSCART_VOLUMES}:/var/www/html:rw
     networks:
-      internal:
+      private:
       php71:
         aliases:
           - php-fpm
@@ -80,7 +80,7 @@ services:
       - ${CSCART_VOLUMES}:/var/www/html:rw
     networks:
       php72:
-      external:
+      public:
         ipv4_address: 172.22.0.72  
     restart: always
 
@@ -89,7 +89,7 @@ services:
     volumes:
       - ${CSCART_VOLUMES}:/var/www/html:rw
     networks:
-      internal:
+      private:
       php72:
         aliases:
           - php-fpm
@@ -104,7 +104,7 @@ services:
       - "80:80"
       - "443:443"
     networks:
-      - external  
+      - public  
     restart: always
 
   mysql:
@@ -117,7 +117,7 @@ services:
       - ${MYSQL_DATA}:/var/lib/mysql:rw
       - ${MYSQL_CONF}:/etc/mysql/conf.d:ro
     networks:
-      internal:
+      private:
         aliases:
           - database
 
@@ -127,11 +127,11 @@ services:
       - "8080:8080"
     restart: always
     networks:
-      internal:
+      - private
 
 ################################################################################
 networks:
-  external:
+  public:
     driver: bridge
     ipam:
       driver: default
@@ -139,7 +139,7 @@ networks:
       -
         subnet: 172.22.0.0/24
 
-  internal:
+  private:
     driver: bridge
   php56:
     driver: bridge
