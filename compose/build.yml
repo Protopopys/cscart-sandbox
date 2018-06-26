@@ -1,14 +1,6 @@
 version: '3'
 services:
 
-#  php5.3-fpm:
-#    build:
-#      args:
-#        PHP_VERSION: ${PHP53_VERSION}
-#      context: ../images/php/fpm/5.3
-#      dockerfile: Dockerfile
-#    image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP53_VERSION}-fpm-alpine3.7
-
   nginx:
     build:
       context: ../images/nginx

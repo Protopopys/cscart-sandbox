@@ -1,0 +1,43 @@
+version: '3'
+services:
+
+  nginx56:
+    environment:
+      DOMAIN: cs-cart.local
+      CSCART_ADDRESS: php56.cs-cart.local
+
+    ################################################################################
+
+  nginx70:
+    environment:
+      DOMAIN: cs-cart.local
+      CSCART_ADDRESS: php70.cs-cart.local
+
+    ################################################################################
+
+  nginx71:
+    environment:
+      DOMAIN: cs-cart.local
+      CSCART_ADDRESS: php71.cs-cart.local
+
+    ################################################################################
+
+  nginx72:
+    environment:
+      DOMAIN: cs-cart.local
+      CSCART_ADDRESS: php72.cs-cart.local
+
+################################################################################
+
+  proxy:
+    environment:
+      DOMAIN: cs-cart.local
+      PHP72_ADDRESS: php72.cs-cart.local
+      PHP71_ADDRESS: php71.cs-cart.local
+      PHP70_ADDRESS: php70.cs-cart.local
+      PHP56_ADDRESS: php56.cs-cart.local
+
+  mysql:
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234567890
+################################################################################

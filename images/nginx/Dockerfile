@@ -45,6 +45,7 @@ RUN apk add --update --no-cache \
  && ln -sf /dev/stdout /var/log/nginx/access.log \
  && ln -sf /dev/stderr /var/log/nginx/error.log
 
+COPY --chown=root:root ssl /etc/nginx/ssl
 COPY --chown=root:root html /etc/nginx/html  
 COPY --chown=root:root templates /etc/nginx/templates
 COPY --chown=root:root nginx.conf /etc/nginx/

@@ -4,12 +4,8 @@ services:
   nginx56:
     image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
     command: /bin/sh -c "envsubst '$${DOMAIN},$${CSCART_ADDRESS}' < /etc/nginx/templates/cscart.dist > /etc/nginx/conf.d/cscart.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
-    environment:
-      DOMAIN: ${DOMAIN}
-      CSCART_ADDRESS: ${PHP56_ADDRESS}
     volumes:
       - ${CSCART_VOLUMES}:/var/www/html:rw
-      - ${CSCART_SSL}:/etc/nginx/ssl
     networks:
       php56:
       external:
@@ -32,12 +28,8 @@ services:
   nginx70:
     image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
     command: /bin/sh -c "envsubst '$${DOMAIN},$${CSCART_ADDRESS}' < /etc/nginx/templates/cscart.dist > /etc/nginx/conf.d/cscart.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
-    environment:
-      DOMAIN: ${DOMAIN}
-      CSCART_ADDRESS: ${PHP70_ADDRESS}
     volumes:
       - ${CSCART_VOLUMES}:/var/www/html:rw
-      - ${CSCART_SSL}:/etc/nginx/ssl
     networks:
       php70:
       external:
@@ -62,10 +54,6 @@ services:
     command: /bin/sh -c "envsubst '$${DOMAIN},$${CSCART_ADDRESS}' < /etc/nginx/templates/cscart.dist > /etc/nginx/conf.d/cscart.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
     volumes:
       - ${CSCART_VOLUMES}:/var/www/html:rw
-      - ${CSCART_SSL}:/etc/nginx/ssl
-    environment:
-      DOMAIN: ${DOMAIN}
-      CSCART_ADDRESS: ${PHP71_ADDRESS}
     networks:
       php71:
       external:
@@ -90,10 +78,6 @@ services:
     command: /bin/sh -c "envsubst '$${DOMAIN},$${CSCART_ADDRESS}' < /etc/nginx/templates/cscart.dist > /etc/nginx/conf.d/cscart.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
     volumes:
       - ${CSCART_VOLUMES}:/var/www/html:rw
-      - ${CSCART_SSL}:/etc/nginx/ssl
-    environment:
-      DOMAIN: ${DOMAIN}
-      CSCART_ADDRESS: ${PHP72_ADDRESS}
     networks:
       php72:
       external:
@@ -116,14 +100,6 @@ services:
   proxy:
     image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
     command: /bin/sh -c "envsubst '$${PHP72_ADDRESS},$${PHP71_ADDRESS},$${PHP70_ADDRESS},$${PHP56_ADDRESS},$${DOMAIN}' < /etc/nginx/templates/proxy.dist > /etc/nginx/conf.d/proxy.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
-    volumes:
-      - ${CSCART_SSL}:/etc/nginx/ssl
-    environment:
-      DOMAIN: ${DOMAIN}
-      PHP72_ADDRESS: ${PHP72_ADDRESS}
-      PHP71_ADDRESS: ${PHP71_ADDRESS}
-      PHP70_ADDRESS: ${PHP70_ADDRESS}
-      PHP56_ADDRESS: ${PHP56_ADDRESS}
     ports:
       - "80:80"
       - "443:443"
@@ -136,9 +112,6 @@ services:
     command: mysqld --sql-mode="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" --character_set_server="utf8" --character_set_filesystem="utf8" --collation-server="utf8_general_ci" --init-connect='SET NAMES utf8' --init_connect='SET collation_connection = utf8_general_ci' --skip-character-set-client-handshake
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_RPASS}
-      MYSQL_DATABASE: ${MYSQL_DB}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASS}
     volumes:
       - ${MYSQL_LOGS}:/var/log:rw
       - ${MYSQL_DATA}:/var/lib/mysql:rw
