@@ -9,7 +9,7 @@ services:
     networks:
       php56:
       public:
-        ipv4_address: 172.22.0.56
+        ipv4_address: 172.122.0.56
     restart: always
 
   php56-fpm:
@@ -33,7 +33,7 @@ services:
     networks:
       php70:
       public:
-        ipv4_address: 172.22.0.70
+        ipv4_address: 172.122.0.70
     restart: always
 
   php70-fpm:
@@ -57,7 +57,7 @@ services:
     networks:
       php71:
       public:
-        ipv4_address: 172.22.0.71
+        ipv4_address: 172.122.0.71
     restart: always
 
   php71-fpm:
@@ -81,7 +81,7 @@ services:
     networks:
       php72:
       public:
-        ipv4_address: 172.22.0.72  
+        ipv4_address: 172.122.0.72  
     restart: always
 
   php72-fpm:
@@ -137,7 +137,7 @@ networks:
       driver: default
       config:
       -
-        subnet: 172.22.0.0/24
+        subnet: 172.122.0.0/24
 
   private:
     driver: bridge

@@ -14,7 +14,7 @@ server {
     include                     xtra/ssl.conf;
 
     location / {
-	proxy_pass https://172.22.0.56; 
+	proxy_pass https://172.122.0.56; 
 	proxy_set_header Host $host;
 	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
@@ -31,7 +31,7 @@ server {
     include                     xtra/ssl.conf;
 
     location / {
-	proxy_pass https://172.22.0.70; 
+	proxy_pass https://172.122.0.70; 
 	proxy_set_header Host $host;
 	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
@@ -48,7 +48,7 @@ server {
     include                     xtra/ssl.conf;
 
     location / {
-	proxy_pass https://172.22.0.71; 
+	proxy_pass https://172.122.0.71; 
 	proxy_set_header Host $host;
 	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
@@ -65,7 +65,7 @@ server {
     include                     xtra/ssl.conf;
 
     location / {
-	proxy_pass https://172.22.0.72; 
+	proxy_pass https://172.122.0.72; 
 	proxy_set_header Host $host;
 	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;

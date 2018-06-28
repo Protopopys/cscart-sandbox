@@ -38,7 +38,7 @@ services:
 ################################################################################
 
   proxy:
-    command: /bin/sh -c "envsubst '$${PHP72_ADDRESS},$${PHP71_ADDRESS},$${PHP70_ADDRESS},$${PHP56_ADDRESS},$${DOMAIN}' < /etc/nginx/templates/proxy.dist > /etc/nginx/conf.d/proxy.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
+    command: /bin/sh -c "envsubst '$${PHP72_ADDRESS},$${PHP71_ADDRESS},$${PHP70_ADDRESS},$${PHP56_ADDRESS},$${DOMAIN}' < /etc/nginx/templates/proxy.dist > /etc/nginx/conf.d/proxy.dist && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && /usr/bin/supervisord -c /etc/supervisord.conf"
     environment:
       DOMAIN: ${DOMAIN}
       PHP72_ADDRESS: ${PHP72_ADDRESS}
