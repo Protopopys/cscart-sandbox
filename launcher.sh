@@ -22,8 +22,8 @@ getParams () {
         wildcard)
             wildcard=$(cat .env | grep WILDCARD | cut -f 2 -d =)
             domain=$(cat .env | grep DOMAIN | cut -f 2 -d =)
-            sslPath=$(cat .env | grep CSCART_SSL | cut -f 2 -d =)
-            cert=${sslPath}/${domain}
+            sslPath=$(cat .env | grep CSCART_VOLUMES | cut -f 2 -d =)
+            cert=${sslPath}/ssl/${domain}.crt
         ;;
 
         *)
