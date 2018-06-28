@@ -6,7 +6,7 @@ services:
       DOMAIN: ${DOMAIN}
       CSCART_ADDRESS: ${PHP56_ADDRESS}
     volumes:
-      - ${CSCART_SSL}:/etc/nginx/ssl
+      - ${CSCART_VOLUMES}/ssl:/etc/nginx/ssl
 
     ################################################################################
 
@@ -15,7 +15,7 @@ services:
       DOMAIN: ${DOMAIN}
       CSCART_ADDRESS: ${PHP70_ADDRESS}
     volumes:
-      - ${CSCART_SSL}:/etc/nginx/ssl
+      - ${CSCART_VOLUMES}/ssl:/etc/nginx/ssl
 
     ################################################################################
 
@@ -24,7 +24,7 @@ services:
       DOMAIN: ${DOMAIN}
       CSCART_ADDRESS: ${PHP71_ADDRESS}
     volumes:
-      - ${CSCART_SSL}:/etc/nginx/ssl
+      - ${CSCART_VOLUMES}/ssl:/etc/nginx/ssl
 
     ################################################################################
 
@@ -33,7 +33,7 @@ services:
       DOMAIN: ${DOMAIN}
       CSCART_ADDRESS: ${PHP72_ADDRESS}
     volumes:
-      - ${CSCART_SSL}:/etc/nginx/ssl
+      - ${CSCART_VOLUMES}/ssl:/etc/nginx/ssl
 
 ################################################################################
 
@@ -46,6 +46,7 @@ services:
       PHP70_ADDRESS: ${PHP70_ADDRESS}
       PHP56_ADDRESS: ${PHP56_ADDRESS}
     volumes:
-      - ${CSCART_SSL}:/etc/nginx/ssl
+      - ${CSCART_VOLUMES}/acme:/acme.sh:rw
+      - ${CSCART_VOLUMES}/ssl:/etc/nginx/ssl
 
 ################################################################################

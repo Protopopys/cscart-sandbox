@@ -5,7 +5,7 @@ services:
     image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
     command: /bin/sh -c "envsubst '$${DOMAIN},$${CSCART_ADDRESS}' < /etc/nginx/templates/cscart.dist > /etc/nginx/conf.d/cscart.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
     volumes:
-      - ${CSCART_VOLUMES}:/var/www/html:rw
+      - ${CSCART_VOLUMES}/cscart:/var/www/html:rw
     networks:
       php56:
       public:
@@ -15,7 +15,7 @@ services:
   php56-fpm:
     image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP56_VERSION}-fpm-alpine3.7
     volumes:
-      - ${CSCART_VOLUMES}:/var/www/html:rw
+      - ${CSCART_VOLUMES}/cscart:/var/www/html:rw
     networks:
       private:
       php56:
@@ -29,7 +29,7 @@ services:
     image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
     command: /bin/sh -c "envsubst '$${DOMAIN},$${CSCART_ADDRESS}' < /etc/nginx/templates/cscart.dist > /etc/nginx/conf.d/cscart.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
     volumes:
-      - ${CSCART_VOLUMES}:/var/www/html:rw
+      - ${CSCART_VOLUMES}/cscart:/var/www/html:rw
     networks:
       php70:
       public:
@@ -39,7 +39,7 @@ services:
   php70-fpm:
     image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP70_VERSION}-fpm-alpine3.7
     volumes:
-      - ${CSCART_VOLUMES}:/var/www/html:rw
+      - ${CSCART_VOLUMES}/cscart:/var/www/html:rw
     networks:
       private:
       php70:
@@ -53,7 +53,7 @@ services:
     image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
     command: /bin/sh -c "envsubst '$${DOMAIN},$${CSCART_ADDRESS}' < /etc/nginx/templates/cscart.dist > /etc/nginx/conf.d/cscart.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
     volumes:
-      - ${CSCART_VOLUMES}:/var/www/html:rw
+      - ${CSCART_VOLUMES}/cscart:/var/www/html:rw
     networks:
       php71:
       public:
@@ -63,7 +63,7 @@ services:
   php71-fpm:
     image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP71_VERSION}-fpm-alpine3.7
     volumes:
-      - ${CSCART_VOLUMES}:/var/www/html:rw
+      - ${CSCART_VOLUMES}/cscart:/var/www/html:rw
     networks:
       private:
       php71:
@@ -77,7 +77,7 @@ services:
     image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
     command: /bin/sh -c "envsubst '$${DOMAIN},$${CSCART_ADDRESS}' < /etc/nginx/templates/cscart.dist > /etc/nginx/conf.d/cscart.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
     volumes:
-      - ${CSCART_VOLUMES}:/var/www/html:rw
+      - ${CSCART_VOLUMES}/cscart:/var/www/html:rw
     networks:
       php72:
       public:
@@ -87,7 +87,7 @@ services:
   php72-fpm:
     image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP72_VERSION}-fpm-alpine3.7
     volumes:
-      - ${CSCART_VOLUMES}:/var/www/html:rw
+      - ${CSCART_VOLUMES}/cscart:/var/www/html:rw
     networks:
       private:
       php72:
