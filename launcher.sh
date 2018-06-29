@@ -7,23 +7,67 @@ checkExist () {
     fi
 }
 
+getFolder () {
+    env=$1
+    case ${env} in
+
+        local)
+            folders="${cscartMysqlLogs} ${cscartMysqlConf} ${cscartVolumes}/cscart"
+            for folder in ${folders}; do
+                if [[ ! -d "${folder}" ]]; then
+                    if [ "${folder}" = "${cscartMysqlConf}" ] || [ "${folder}" = "${cscartMysqlLogs}" ];then
+                        mkdir -p -m777 ${folder}
+                    else
+                        mkdir -p -m770 ${folder} && chown daemon: ${folder}
+                    fi
+                fi
+            done
+        ;;
+
+        external)
+            folders="${cscartMysqlLogs} ${cscartMysqlConf} ${cscartVolumes}/cscart ${cscartVolumes}/acme ${cscartVolumes}/ssl"
+            for folder in ${folders}; do
+                if [[ ! -d "${folder}" ]]; then
+                    if [ "${folder}" = "${cscartMysqlConf}" ] || [ "${folder}" = "${cscartMysqlLogs}" ];then
+                        mkdir -p -m777 ${folder}
+                    elif [ "${folder}" = "${cscartVolumes}/acme" ] || [ "${folder}" = "${cscartVolumes}/ssl" ];then
+                        mkdir -p -m750 ${folder}
+                    else 
+                        mkdir -p -m770 ${folder} && chown daemon: ${folder}
+                    fi
+                fi
+            done
+
+        ;;
+    esac
+
+}
+
 getParams () {
     var=$1
     case ${var} in
 
         local)
             dockerCommand="docker-compose -f ./compose/global.yml -f ./compose/local.yml --project-name sandbox"
+            cscartVolumes=$(cat .env | grep CSCART_VOLUMES | cut -f 2 -d =)
+            cscartMysqlLogs=$(cat .env | grep MYSQL_LOGS | cut -f 2 -d =)
+            cscartMysqlConf=$(cat .env | grep MYSQL_CONF | cut -f 2 -d =)
+            cscartMysqlData=$(cat .env | grep MYSQL_DATA | cut -f 2 -d =)
         ;;
 
         external)
             dockerCommand="docker-compose -f ./compose/global.yml -f ./compose/external.yml --project-name sandbox"
+            cscartVolumes=$(cat .env | grep CSCART_VOLUMES | cut -f 2 -d =)
+            cscartMysqlLogs=$(cat .env | grep MYSQL_LOGS | cut -f 2 -d =)
+            cscartMysqlConf=$(cat .env | grep MYSQL_CONF | cut -f 2 -d =)
+            cscartMysqlData=$(cat .env | grep MYSQL_DATA | cut -f 2 -d =)
         ;;
 
         wildcard)
             wildcard=$(cat .env | grep WILDCARD | cut -f 2 -d =)
             domain=$(cat .env | grep DOMAIN | cut -f 2 -d =)
-            sslPath=$(cat .env | grep CSCART_VOLUMES | cut -f 2 -d =)
-            cert=${sslPath}/ssl/${domain}.crt
+            cscartVolumes=$(cat .env | grep CSCART_VOLUMES | cut -f 2 -d =)
+            cert=${cscartVolumes}/ssl/${domain}.crt
         ;;
 
         *)
@@ -43,6 +87,7 @@ doWork () {
         external)
             checkExist .env
             getParams ${do}
+            getFolder ${do}
             doWork wildcard
             ${dockerCommand} up -d php56-fpm php70-fpm php71-fpm php72-fpm mysql
             sleep 3
@@ -52,6 +97,7 @@ doWork () {
         local)
             checkExist .env
             getParams ${do}
+            getFolder ${do}
             ${dockerCommand} up -d php56-fpm php70-fpm php71-fpm php72-fpm mysql
             sleep 3
             ${dockerCommand} up -d
