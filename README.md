@@ -130,7 +130,7 @@
  
     `PHP71_ADDRESS` - поддомен для PHP 7.1 - nginx + php-fpm 7.1
  
-    `PHP72_ADDRESS` - поддомен для PHP 7.2 - nginx + php-fpm 7.1
+    `PHP72_ADDRESS` - поддомен для PHP 7.2 - nginx + php-fpm 7.2
 
     **Прошу учесть, что на `8080` порту будет доступен [Adminer](https://www.adminer.org) для работы с сервером баз данных, используйте Firewall для предотвращения несанкционированного доступа.**
 
