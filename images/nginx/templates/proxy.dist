@@ -12,6 +12,9 @@ server {
     ssl_certificate             /etc/nginx/ssl/${DOMAIN}.crt;
     ssl_certificate_key         /etc/nginx/ssl/${DOMAIN}.key;
     include                     xtra/ssl.conf;
+    include                     xtra/error-40X.conf;
+    include                     xtra/error-50X.conf;
+
 
     location / {
 	proxy_pass https://172.122.0.56; 
@@ -29,6 +32,8 @@ server {
     ssl_certificate             /etc/nginx/ssl/${DOMAIN}.crt;
     ssl_certificate_key         /etc/nginx/ssl/${DOMAIN}.key;
     include                     xtra/ssl.conf;
+    include                     xtra/error-40X.conf;
+    include                     xtra/error-50X.conf;
 
     location / {
 	proxy_pass https://172.122.0.70; 
@@ -46,6 +51,8 @@ server {
     ssl_certificate             /etc/nginx/ssl/${DOMAIN}.crt;
     ssl_certificate_key         /etc/nginx/ssl/${DOMAIN}.key;
     include                     xtra/ssl.conf;
+    include                     xtra/error-40X.conf;
+    include                     xtra/error-50X.conf;
 
     location / {
 	proxy_pass https://172.122.0.71; 
@@ -63,6 +70,8 @@ server {
     ssl_certificate             /etc/nginx/ssl/${DOMAIN}.crt;
     ssl_certificate_key         /etc/nginx/ssl/${DOMAIN}.key;
     include                     xtra/ssl.conf;
+    include                     xtra/error-40X.conf;
+    include                     xtra/error-50X.conf;
 
     location / {
 	proxy_pass https://172.122.0.72; 
