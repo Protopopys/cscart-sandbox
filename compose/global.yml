@@ -110,7 +110,7 @@ services:
 ################################################################################
 
   postfix:
-    image: ${REGISTRY}protopopys/docker-postfix:debian-jessie
+    image: ${REGISTRY}protopopys/postfix:debian-jessie
     environment:
       maildomain: ${DOMAIN}
       smtp_user: ${SMTP_USER}:${SMTP_PASS}
