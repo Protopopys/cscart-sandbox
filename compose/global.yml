@@ -4,6 +4,9 @@ services:
   nginx56:
     image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
     command: /bin/sh -c "envsubst '$${DOMAIN},$${CSCART_ADDRESS}' < /etc/nginx/templates/cscart.dist > /etc/nginx/conf.d/cscart.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
+    environment:
+      DOMAIN: ${DOMAIN}
+      CSCART_ADDRESS: ${PHP56_ADDRESS}
     volumes:
       - ${CSCART_VOLUMES}/cscart:/var/www/html:rw
     networks:
@@ -28,6 +31,9 @@ services:
   nginx70:
     image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
     command: /bin/sh -c "envsubst '$${DOMAIN},$${CSCART_ADDRESS}' < /etc/nginx/templates/cscart.dist > /etc/nginx/conf.d/cscart.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
+    environment:
+      DOMAIN: ${DOMAIN}
+      CSCART_ADDRESS: ${PHP70_ADDRESS}
     volumes:
       - ${CSCART_VOLUMES}/cscart:/var/www/html:rw
     networks:
@@ -52,6 +58,9 @@ services:
   nginx71:
     image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
     command: /bin/sh -c "envsubst '$${DOMAIN},$${CSCART_ADDRESS}' < /etc/nginx/templates/cscart.dist > /etc/nginx/conf.d/cscart.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
+    environment:
+      DOMAIN: ${DOMAIN}
+      CSCART_ADDRESS: ${PHP71_ADDRESS}
     volumes:
       - ${CSCART_VOLUMES}/cscart:/var/www/html:rw
     networks:
@@ -76,6 +85,9 @@ services:
   nginx72:
     image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
     command: /bin/sh -c "envsubst '$${DOMAIN},$${CSCART_ADDRESS}' < /etc/nginx/templates/cscart.dist > /etc/nginx/conf.d/cscart.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
+    environment:
+      DOMAIN: ${DOMAIN}
+      CSCART_ADDRESS: ${PHP72_ADDRESS}
     volumes:
       - ${CSCART_VOLUMES}/cscart:/var/www/html:rw
     networks:
@@ -97,9 +109,26 @@ services:
 
 ################################################################################
 
+  postfix:
+    image: ${REGISTRY}protopopys/docker-postfix:debian-jessie
+    environment:
+      maildomain: ${DOMAIN}
+      smtp_user: ${SMTP_USER}:${SMTP_PASS}
+      maxmailsize: ${MAXMAILSIZE}
+    networks:
+      private:
+        aliases:
+          - postfix
+ 
   proxy:
     image: ${REGISTRY}protopopys/cscart-sandbox:nginx-latest-alpine3.7
     command: /bin/sh -c "envsubst '$${PHP72_ADDRESS},$${PHP71_ADDRESS},$${PHP70_ADDRESS},$${PHP56_ADDRESS},$${DOMAIN}' < /etc/nginx/templates/proxy.dist > /etc/nginx/conf.d/proxy.conf && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && nginx-debug -g 'daemon off;'"
+    environment:
+      DOMAIN: ${DOMAIN}
+      PHP72_ADDRESS: ${PHP72_ADDRESS}
+      PHP71_ADDRESS: ${PHP71_ADDRESS}
+      PHP70_ADDRESS: ${PHP70_ADDRESS}
+      PHP56_ADDRESS: ${PHP56_ADDRESS}
     ports:
       - "80:80"
       - "443:443"

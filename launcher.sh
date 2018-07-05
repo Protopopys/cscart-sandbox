@@ -48,7 +48,7 @@ getParams () {
     case ${var} in
 
         local)
-            dockerCommand="docker-compose -f ./compose/global.yml -f ./compose/local.yml --project-name sandbox"
+            dockerCommand="docker-compose -f ./compose/global.yml --project-name sandbox"
             cscartVolumes=$(cat .env | grep CSCART_VOLUMES | cut -f 2 -d =)
             cscartMysqlLogs=$(cat .env | grep MYSQL_LOGS | cut -f 2 -d =)
             cscartMysqlConf=$(cat .env | grep MYSQL_CONF | cut -f 2 -d =)
@@ -89,7 +89,7 @@ doWork () {
             getParams ${do}
             getFolder ${do}
             doWork wildcard
-            ${dockerCommand} up -d php56-fpm php70-fpm php71-fpm php72-fpm mysql
+            ${dockerCommand} up -d php56-fpm php70-fpm php71-fpm php72-fpm mysql 
             sleep 3
             ${dockerCommand} up -d 
         ;;
@@ -98,7 +98,7 @@ doWork () {
             checkExist .env
             getParams ${do}
             getFolder ${do}
-            ${dockerCommand} up -d php56-fpm php70-fpm php71-fpm php72-fpm mysql
+            ${dockerCommand} up -d php56-fpm php70-fpm php71-fpm php72-fpm mysql postfix
             sleep 3
             ${dockerCommand} up -d
         ;;
