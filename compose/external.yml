@@ -27,7 +27,7 @@ services:
 
   postfix:
     volumes:
-      - ${CSCART_VOLUMES}/ssl:/etc/nginx/ssl:/etc/postfix/certs:ro 
+      - ${CSCART_VOLUMES}/ssl:/etc/postfix/certs:ro 
 
   proxy:
     command: /bin/sh -c "envsubst '$${PHP72_ADDRESS},$${PHP71_ADDRESS},$${PHP70_ADDRESS},$${PHP56_ADDRESS},$${DOMAIN}' < /etc/nginx/templates/proxy.dist > /etc/nginx/conf.d/proxy.dist && cp -f /etc/nginx/templates/*.conf /etc/nginx/xtra/ && /usr/bin/supervisord -c /etc/supervisord.conf"
