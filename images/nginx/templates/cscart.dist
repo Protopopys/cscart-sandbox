@@ -163,7 +163,7 @@ server {
         return 404;
     }
 
-    location ~* \.php$ {
+    location ~* /(\w+/)?(\w+/)?(.+\.php)$ {
         return 598 ;
     }
 
@@ -343,7 +343,7 @@ server {
         return 404;
     }
 
-    location ~* \.php$ {
+    location ~* /(\w+/)?(\w+/)?(.+\.php)$ {
         return 598 ;
     }
 
