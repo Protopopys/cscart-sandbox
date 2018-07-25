@@ -27,7 +27,7 @@ How to Set It Up
 Step 1. Copy and Prepare File with Variables
 ++++++++++++++++++++++++++++++++++++++++++++
 
-* For using locally with selfsigned certificates:
+* For using locally with self-signed certificates:
 
   .. code-block:: bash
 
@@ -129,7 +129,7 @@ Step 2. Make Changes to the .ENV File
 Step 3. Launching the Environment
 +++++++++++++++++++++++++++++++++
 
-* For local use with selfsigned certificates:
+* For local use with self-signed certificates:
 
   .. code-block:: bash
 
@@ -151,7 +151,7 @@ Step 3. Launching the Environment
 Access Credentials
 ------------------
 
-* For local use with selfsigned certificates:
+* For local use with self-signed certificates:
 
   * ``php56.cs-cart.local`` - nginx + php-fpm 5.6
 
