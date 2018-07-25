@@ -27,13 +27,13 @@ How to Set It Up
 Step 1. Copy and Prepare File with Variables
 ++++++++++++++++++++++++++++++++++++++++++++
 
-* For using locally with self-signed certificates:
+* **For using locally with self-signed certificates:**
 
   .. code-block:: bash
 
       $ cp compose/.env.local .env
    
-* For using with a wildcard certificate (implemented for Selectel and Cloudflare only): 
+* **For using with a wildcard certificate** (implemented for Selectel and Cloudflare only): 
 
   .. code-block:: bash
 
@@ -53,7 +53,7 @@ Step 2. Make Changes to the .ENV File
 
 **What changes to make:**
 
-* For local use:
+* **For local use:**
 
   * ``CSCART_VOLUMES`` - the path to the directory with СS-Cart instances (the directory will be created automatically if it doesn't exist).
 
@@ -65,7 +65,7 @@ Step 2. Make Changes to the .ENV File
 
   * ``MYSQL_RPASS`` - root password for MySQL database server.
 
-* For a wildcard certificate by Selectel:
+* **For a wildcard certificate by Selectel:**
 
   * ``DNS_API=dns_selectel`` - the type of DNS provider for getting the wildcard certificate.
 
@@ -91,7 +91,7 @@ Step 2. Make Changes to the .ENV File
 
   * ``PHP72_ADDRESS`` - a subdomain for PHP 7.2.
 
-* For a wildcard certificate by Cloudflare:
+* **For a wildcard certificate by Cloudflare:**
 
   * ``DNS_API=dns_selectel`` - the type of DNS provider for getting the wildcard certificate.
 
@@ -129,7 +129,7 @@ Step 2. Make Changes to the .ENV File
 Step 3. Launch Environment
 ++++++++++++++++++++++++++
 
-* For local use with self-signed certificates:
+* **For local use with self-signed certificates:**
 
   .. code-block:: bash
 
@@ -141,7 +141,7 @@ Step 3. Launch Environment
 
       sudo echo -e '127.0.0.1  php56.cs-cart.local\n127.0.0.1  php70.cs-cart.local\n127.0.0.1  php71.cs-cart.local\n127.0.0.1  php72.cs-cart.local\n' >> /etc/hosts
 
-* For a wildcard certificate (only by Selectel or Cloudflare):
+* **For a wildcard certificate (only by Selectel or Cloudflare):**
 
   .. code-block:: bash
 
@@ -151,7 +151,7 @@ Step 3. Launch Environment
 Access Credentials
 ------------------
 
-* For local use with self-signed certificates:
+* **For local use with self-signed certificates:**
 
   * ``php56.cs-cart.local`` - nginx + php-fpm 5.6
 
@@ -167,7 +167,7 @@ Access Credentials
 
   * ``root`` - user name; the password is the value of the ``${MYSQL_RPASS}`` variable in the ENV file.
 
-* If a wildcard certificate by Selectel or Cloudflare is used instead, then the addresses are the values of the variables in the ENV file:
+* **If a wildcard certificate by Selectel or Cloudflare is used instead**, then the addresses are the values of the variables in the ENV file:
 
   * ``PHP56_ADDRESS`` - a subdomain for PHP 5.6 - nginx + php-fpm 5.6
 
@@ -219,13 +219,13 @@ To send emails from CS-Cart instances, go to **Settings → E-mails** in the CS-
 Шаг 1. Копируем и готовим файла переменных
 ++++++++++++++++++++++++++++++++++++++++++
 
-* Если используем локально c самоподписанными сертификатами:
+* **Если используем локально c самоподписанными сертификатами:**
 
   .. code-block:: bash
 
       $ cp compose/.env.local .env
 
-* Если хотим получить wildcard-сертификат (реализовано лишь для Selectel и Cloudflare):
+* **Если хотим получить wildcard-сертификат** (реализовано лишь для Selectel и Cloudflare):
 
   .. code-block:: bash
 
@@ -245,7 +245,7 @@ To send emails from CS-Cart instances, go to **Settings → E-mails** in the CS-
 
 **Какие изменения вносить:**
 
-* Локальное использование:
+* **Локальное использование:**
 
   * ``CSCART_VOLUMES`` - путь до папки с экземплярами СS-Cart (будет создана автоматически, если не существует);
 
@@ -257,7 +257,7 @@ To send emails from CS-Cart instances, go to **Settings → E-mails** in the CS-
 
   * ``MYSQL_RPASS`` - root-пароль для сервера баз данных MySQL.
 
-* Wildcard-сертификат через Selectel:
+* **Wildcard-сертификат через Selectel:**
 
   * ``DNS_API=dns_selectel`` - тип DNS-провайдера для получения wildcard-сертификата;
 
@@ -283,7 +283,7 @@ To send emails from CS-Cart instances, go to **Settings → E-mails** in the CS-
 
   * ``PHP72_ADDRESS`` - поддомен для PHP 7.2.
 
-* Wildcard-сертификат через Cloudflare:
+* **Wildcard-сертификат через Cloudflare:**
 
   * ``DNS_API=dns_selectel`` - тип DNS провайдера для получения wildcard-сертификата;
 
@@ -321,7 +321,7 @@ To send emails from CS-Cart instances, go to **Settings → E-mails** in the CS-
 Шаг 3. Запускаем окружение
 ++++++++++++++++++++++++++
 
-* Если используем локально c самоподписанными сертификатами:
+* **Если используем локально c самоподписанными сертификатами:**
 
   .. code-block:: bash
 
@@ -333,7 +333,7 @@ To send emails from CS-Cart instances, go to **Settings → E-mails** in the CS-
 
       sudo echo -e '127.0.0.1  php56.cs-cart.local\n127.0.0.1  php70.cs-cart.local\n127.0.0.1  php71.cs-cart.local\n127.0.0.1  php72.cs-cart.local\n' >> /etc/hosts
 
-* Если хотим получить wildcard-сертификат (реализовано лишь для Selectel и Cloudflare):
+* **Если хотим получить wildcard-сертификат** (реализовано лишь для Selectel и Cloudflare):
 
   .. code-block:: bash
 
@@ -343,7 +343,7 @@ To send emails from CS-Cart instances, go to **Settings → E-mails** in the CS-
 Доступы
 -------
 
-* Если используем локально c самоподписанными сертификатами:
+* **Если используем локально c самоподписанными сертификатами:**
 
   * ``php56.cs-cart.local`` - nginx + php-fpm 5.6;
 
@@ -359,7 +359,7 @@ To send emails from CS-Cart instances, go to **Settings → E-mails** in the CS-
 
   * ``root`` - имя пользователя; паролю соответствует значение переменной ``${MYSQL_RPASS}`` в env-файле.
 
-* Если используем вариант с wildcard сертификатом (реализовано лишь для Selectel и Cloudflare), то адресами являются значения переменных в env-файле:
+* **Если используем вариант с wildcard сертификатом** (реализовано лишь для Selectel и Cloudflare), то адресами являются значения переменных в env-файле:
 
   * ``PHP56_ADDRESS`` - поддомен для PHP 5.6 - nginx + php-fpm 5.6;
 
