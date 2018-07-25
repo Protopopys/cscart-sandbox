@@ -29,13 +29,13 @@ Step 1. Copy and Prepare File with Variables
 
 * For using locally with selfsigned certificates:
 
-  .. code-block::bash
+  .. code-block:: bash
 
       $ cp compose/.env.local .env
    
 * For using with a wildcard certificate (implemented for Selectel and Cloudflare only): 
 
-  .. code-block::bash
+  .. code-block:: bash
 
       $ cp compose/.env.local .env
 
@@ -131,19 +131,19 @@ Step 3. Launching the Environment
 
 * For local use with selfsigned certificates:
 
-  .. code-block::bash
+  .. code-block:: bash
 
       sudo ./launcher local
 
   Make sure to add the following entries to */etc/hosts*:
 
-  .. code-block::bash
+  .. code-block:: bash
 
       sudo echo -e '127.0.0.1  php56.cs-cart.local\n127.0.0.1  php70.cs-cart.local\n127.0.0.1  php71.cs-cart.local\n127.0.0.1  php72.cs-cart.local\n' >> /etc/hosts
 
 * For a wildcard certificate (only by Selectel or Cloudflare):
 
-  .. code-block::bash
+  .. code-block:: bash
 
       sudo ./launcher external
 
@@ -221,13 +221,13 @@ To send emails from CS-Cart instances, go to **Settings → E-mails** in the CS-
 
 * Если используем локально c самоподписанными сертификатами:
 
-  .. code-block::bash
+  .. code-block:: bash
 
       $ cp compose/.env.local .env
 
 * Если хотим получить wildcard-сертификат (реализовано лишь для Selectel и Cloudflare):
 
-  .. code-block::bash
+  .. code-block:: bash
 
       $ cp compose/.env.external .env
 
@@ -323,19 +323,19 @@ To send emails from CS-Cart instances, go to **Settings → E-mails** in the CS-
 
 * Если используем локально c самоподписанными сертификатами:
 
-  .. code-block::bash
+  .. code-block:: bash
 
       sudo ./launcher local
 
   Также необходимо внести записи в файл */etc/hosts*:
 
-  .. code-block::bash
+  .. code-block:: bash
 
       sudo echo -e '127.0.0.1  php56.cs-cart.local\n127.0.0.1  php70.cs-cart.local\n127.0.0.1  php71.cs-cart.local\n127.0.0.1  php72.cs-cart.local\n' >> /etc/hosts
 
 * Если хотим получить wildcard-сертификат (реализовано лишь для Selectel и Cloudflare):
 
-  .. code-block::bash
+  .. code-block:: bash
 
       sudo ./launcher external
 
