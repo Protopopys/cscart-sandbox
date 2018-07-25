@@ -125,9 +125,9 @@ Step 2. Make Changes to the .ENV File
 
   * ``MAXMAILSIZE`` - `message_size_limit <http://www.postfix.org/postconf.5.html#message_size_limit>`_, the maximum size of the message.
 
-+++++++++++++++++++++++++++++++++
-Step 3. Launching the Environment
-+++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++
+Step 3. Launch Environment
+++++++++++++++++++++++++++
 
 * For local use with self-signed certificates:
 
