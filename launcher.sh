@@ -32,7 +32,7 @@ getParams () {
     case ${var} in
 
         local)
-            dockerCommand="docker-compose -f ./compose/global.yml --project-name sandbox"
+            dockerCommand="docker-compose -f ./compose/global.yml --project-name selenoid"
             cscartVolumes=$(cat .env | grep CSCART_VOLUMES | cut -f 2 -d =)
             cscartMysqlLogs=$(cat .env | grep MYSQL_LOGS | cut -f 2 -d =)
             cscartMysqlConf=$(cat .env | grep MYSQL_CONF | cut -f 2 -d =)
