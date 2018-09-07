@@ -142,7 +142,53 @@ services:
     restart: always
 
 ################################################################################
+
+  selenoid:
+    container_name: selenoid
+    image: aerokube/selenoid:latest-release
+    privileged: true
+    restart: always
+    ports:
+      - "4444:4444"
+    volumes:
+      - ${CSCART_VOLUMES}/browsers.json:/opt/selenoid/conf/browsers.json
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      DOCKER_API_VERSION: 1.35
+      TZ: Europe/Samara
+      OVERRIDE_VIDEO_OUTPUT_DIR: /srv/www-docker/selenoid/video
+    command: ["-cpu", "2", "-conf", "/opt/selenoid/conf/browsers.json", "-container-network", "selenoid_app", "-retry-count", "5", "-limit", "18", "-session-attempt-timeout", "60s", "-timeout", "3m"]
+    networks:
+      app:
+        ipv4_address: 10.1.0.2
+        aliases:
+          - selenoid
+
+  selenoid-ui:
+    container_name: selenoid-ui
+    image: aerokube/selenoid-ui:latest-release
+    restart: always
+    ports:
+      - "8080:8080"
+    command: ["--selenoid-uri", "http://selenoid:4444"]
+    extra_hosts:
+      - "selenoid:10.1.0.2"
+    networks:
+      app:
+        ipv4_address: 10.1.0.3
+        aliases:
+          - ui
+
+################################################################################
 networks:
+  app:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      -
+        subnet: 10.1.0.0/24
+
   public:
     driver: bridge
     ipam:
@@ -150,7 +196,7 @@ networks:
       config:
       -
         subnet: 172.122.0.0/24
-
+       
   private:
     driver: bridge
   php56:
