@@ -11,7 +11,7 @@ ENV PHPIZE_DEPS \
 	libc-dev \
 	make \
 	pkgconf \
-	re2c
+	re2c 
 RUN set -xe; \
     apk add --no-cache --update --virtual .build-deps \
 	${PHPIZE_DEPS} \
@@ -41,12 +41,20 @@ upload_max_filesize = 250M\n\
 post_max_size = 250M\n\
 max_execution_time = 600'\
 >> /usr/local/etc/php/conf.d/docker-php-uploads.ini \
+ && echo -e '[mail function]\n\
+sendmail_path = /mail.php'\
+>> /usr/local/etc/php/conf.d/docker-php-mail.ini \
+ && echo -e '#!/usr/local/bin/php\n\
+<?php\n\
+exit(0);'\
+>> /mail.php \
+ && chmod +x /mail.php \
  && runDeps="$( \
 		scanelf --needed --nobanner --format '%n#p' --recursive /usr/local \
 			| tr ',' '\n' \
 			| sort -u \
 			| awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
 	)" \
- && apk add --no-cache --virtual .php-rundeps $runDeps \
+ && apk add --no-cache --virtual .php-rundeps $runDeps curl wget mysql-client \
  && apk del .build-deps \
  && rm -rf /tmp/* /var/cache/apk/*  ~/.pearrc

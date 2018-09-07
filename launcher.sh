@@ -98,7 +98,7 @@ doWork () {
             checkExist .env
             getParams ${do}
             getFolder ${do}
-            ${dockerCommand} up -d php56-fpm php70-fpm php71-fpm php72-fpm mysql postfix
+            ${dockerCommand} up -d php56-fpm php70-fpm php71-fpm php72-fpm mysql 
             sleep 3
             ${dockerCommand} up -d
         ;;

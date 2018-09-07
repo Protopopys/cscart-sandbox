@@ -8,7 +8,7 @@ RUN apk add --update --no-cache \
     openssl \
     supervisor \
     coreutils \
- && rm -rf /tmp/* /var/cache/apk/* \
+ && rm -rf /tmp/* /var/cache/apk/* /etc/nginx/conf.d/default.conf \
  && wget -O -  https://get.acme.sh | sh && rm -rf /install_acme.sh/ \
  && ln -s  /root/.acme.sh/acme.sh  /usr/local/bin/acme.sh && crontab -l | grep acme.sh | sed 's#> /dev/null##' | crontab - \
  && for verb in help \ 
