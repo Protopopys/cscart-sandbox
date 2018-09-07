@@ -41,13 +41,29 @@ upload_max_filesize = 250M\n\
 post_max_size = 250M\n\
 max_execution_time = 600'\
 >> /usr/local/etc/php/conf.d/docker-php-uploads.ini \
+\
  && echo -e '[mail function]\n\
 sendmail_path = /mail.php'\
 >> /usr/local/etc/php/conf.d/docker-php-mail.ini \
+\
  && echo -e '#!/usr/local/bin/php\n\
 <?php\n\
 exit(0);'\
 >> /mail.php \
+\
+ && echo -e '[global]\n\
+daemonize = no\n\
+error_log = /proc/self/fd/2\n\
+[www]\n\
+user = www-data\n\
+group = www-data\n\
+listen = [::]:9000\n\
+pm = static\n\
+pm.max_children = 25\n\
+access.log = /proc/self/fd/2\n\
+catch_workers_output = yes\n\
+clear_env = no'\
+> /usr/local/etc/php-fpm.d/www.conf \
  && chmod +x /mail.php \
  && runDeps="$( \
 		scanelf --needed --nobanner --format '%n#p' --recursive /usr/local \

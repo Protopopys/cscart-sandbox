@@ -134,7 +134,7 @@ services:
       - ${MYSQL_DATA}:/var/lib/mysql:rw
       - ${MYSQL_CONF}:/etc/mysql/conf.d:ro
     ports:
-      - "3306:3306"
+      - "127.0.0.1:3306:3306"
     networks:
       private:
         aliases:
