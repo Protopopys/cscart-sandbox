@@ -22,6 +22,7 @@ getFolder () {
                     fi
                 fi
             done
+
         ;;
     esac
 
@@ -57,6 +58,8 @@ doWork () {
             checkExist .env
             getParams ${do}
             getFolder ${do}
+            cp -f ./my.cnf ${cscartMysqlConf}/
+            cp -f ./browsers.json ${cscartVolumes}/
             ${dockerCommand} up -d php56-fpm php70-fpm php71-fpm php72-fpm mysql 
             sleep 3
             ${dockerCommand} up -d
