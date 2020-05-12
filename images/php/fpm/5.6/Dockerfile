@@ -11,7 +11,8 @@ ENV PHPIZE_DEPS \
 	libc-dev \
 	make \
 	pkgconf \
-	re2c
+	re2c \
+	curl-dev
 RUN set -xe; \
     apk add --no-cache --update --virtual .build-deps \
 	${PHPIZE_DEPS} \
@@ -31,6 +32,8 @@ RUN set -xe; \
     mbstring \
     zip \
     soap \
+	 curl \
+	 sockets \
  && pecl channel-update pecl.php.net \
  && pecl install imagick \
  && pecl install apcu-4.0.11 \
