@@ -16,7 +16,8 @@ services:
     restart: always
 
   php56-fpm:
-    image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP56_VERSION}-fpm-alpine3.7
+     # image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP56_VERSION}-fpm-alpine3.7
+    build: ../images/php/fpm/5.6/
     volumes:
       - ${CSCART_VOLUMES}/cscart:/var/www/html:rw
     networks:
@@ -43,7 +44,8 @@ services:
     restart: always
 
   php70-fpm:
-    image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP70_VERSION}-fpm-alpine3.7
+     # image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP70_VERSION}-fpm-alpine3.7
+    build: ../images/php/fpm/7.0/
     volumes:
       - ${CSCART_VOLUMES}/cscart:/var/www/html:rw
     networks:
@@ -67,10 +69,11 @@ services:
       php71:
       public:
         ipv4_address: 172.122.0.71
-    restart: always
 
   php71-fpm:
-    image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP71_VERSION}-fpm-alpine3.7
+     #image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP71_VERSION}-fpm-alpine3.7
+     #image: php71:latest
+    build: ../images/php/fpm/7.1/
     volumes:
       - ${CSCART_VOLUMES}/cscart:/var/www/html:rw
     networks:
@@ -78,7 +81,6 @@ services:
       php71:
         aliases:
           - php-fpm
-    restart: always
 
     ################################################################################
 
@@ -97,7 +99,8 @@ services:
     restart: always
 
   php72-fpm:
-    image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP72_VERSION}-fpm-alpine3.7
+     # image: ${REGISTRY}protopopys/cscart-sandbox:php${PHP72_VERSION}-fpm-alpine3.7
+    build: ../images/php/fpm/7.2/
     volumes:
       - ${CSCART_VOLUMES}/cscart:/var/www/html:rw
     networks:
@@ -134,7 +137,6 @@ services:
       - "443:443"
     networks:
       - public  
-    restart: always
 
   mysql:
     image: mysql:5.7.22
@@ -154,7 +156,7 @@ services:
     image: adminer
     ports:
       - "8080:8080"
-    restart: always
+      - "3306:3306"
     networks:
       - private
 
